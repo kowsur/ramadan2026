@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KWAUK | Kanaighat Welfare Association UK</title>
+    <style>
+        :root {
+            --kwau-blue: #8ea9ff; 
+            --kwau-yellow: #ffeb3b; 
+            --kwau-dark-blue: #5c7cfa;
+            --white: #ffffff;
+            --light-bg: #f8fbff;
+            --text: #2d3436;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 2px solid var(--kwau-blue);
+        }
+
+        .brand-text {
+            color: var(--kwau-dark-blue);
+            font-weight: 800;
+            font-size: 1.2rem;
+            line-height: 1.1;
+        }
+
+        .brand-text span {
+            display: block;
+            font-size: 0.75rem;
+            color: #636e72;
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--kwau-dark-blue); }
+
+        /* --- Hero --- */
+        .hero {
+            background: linear-gradient(135deg, var(--kwau-blue) 0%, var(--kwau-dark-blue) 100%);
+            padding: 80px 5%;
+            text-align: center;
+            color: white;
+        }
+
+        .estd-badge {
+            background: var(--kwau-yellow);
+            color: #444;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* --- Executive Committee Section --- */
+        .committee-section {
+            padding: 80px 5%;
+            background: var(--light-bg);
+            text-align: center;
+        }
+
+        .committee-section h2 {
+            color: var(--kwau-dark-blue);
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+        }
+
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .member-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .member-card:hover { transform: translateY(-5px); }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            background: #eee;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid var(--kwau-blue);
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-card h4 { margin: 10px 0 5px; color: var(--kwau-dark-blue); }
+        .member-card p { margin: 0; font-size: 0.9rem; font-weight: bold; color: #e67e22; text-transform: uppercase; }
+
+        /* --- Mission Section --- */
+        .mission-area {
+            padding: 80px 10%;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .mission-img {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .mission-img img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+
+        .mission-content { flex: 1; min-width: 300px; }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--kwau-dark-blue);
+            color: white;
+            padding: 40px 5%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo-link">
+            <img src="logo.jpeg" alt="KWAUK Logo" class="nav-logo">
+            <div class="brand-text">
+                KWAUK
+                <span>Kanaighat Welfare Association UK</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#committee">Committee</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="#" style="background: var(--kwau-yellow); padding: 8px 20px; border-radius: 20px; color: #444;">Donate</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="estd-badge">ESTD: 2011</div>
+        <h1>Together for a Brighter Future</h1>
+        <p>Serving the community of Kanaighat with compassion, unity, and excellence since 2011.</p>
+    </header>
+
+    <section class="mission-area">
+        <div class="mission-img">
+            <img src="logo.jpeg" alt="KWAUK Emblem" style="width: 280px;">
+        </div>
+        <div class="mission-content">
+            <h2 style="color: var(--kwau-dark-blue);">Our Vision</h2>
+            <p>The Kanaighat Welfare Association UK (KWAUK) was established to empower the residents of Kanaighat through sustainable development, healthcare access, and educational support. Our emblem of the helping hands and doves represents our core values: Peace and Support.</p>
+        </div>
+    </section>
+
+    <section class="committee-section" id="committee">
+        <h2>Executive Committee</h2>
+        <div class="committee-grid">
+            <div class="member-card">
+                <div class="member-photo">
+                    <img src="president.jpeg" >
+                </div>
+                <h4>Kowsur Ahmed</h4>
+                <p>President</p>
+            </div>
+            
+            <div class="member-card">
+                <div class="member-photo">👤</div>
+                <h4>Name Placeholder</h4>
+                <p>General Secretary</p>
+            </div>
+            <div class="member-card">
+                <div class="member-photo">👤</div>
+                <h4>Name Placeholder</h4>
+                <p>Treasurer</p>
+            </div>
+            <div class="member-card">
+                <div class="member-photo">👤</div>
+                <h4>Name Placeholder</h4>
+                <p>Organizing Secretary</p>
+            </div>
+        </div>
+        <p style="margin-top: 30px; font-style: italic; color: #777;">Full list of committee members available in our annual registry.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Kanaighat Welfare Association UK (KWAUK). All Rights Reserved.</p>
+        <p style="font-size: 0.8rem; opacity: 0.8;">Registered Charity Organization | Established 2011</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Project 2026 | KWAUK</title>
+    <style>
+        :root {
+            --kwau-blue: #8ea9ff; 
+            --kwau-yellow: #ffeb3b; 
+            --kwau-dark-blue: #5c7cfa;
+            --white: #ffffff;
+            --light-bg: #f8fbff;
+            --text: #2d3436;
+            --success: #27ae60;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            color: var(--text);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            background: var(--white);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo { width: 40px; height: 40px; border-radius: 50%; }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--kwau-blue), var(--kwau-dark-blue));
+            color: white;
+            padding: 40px 5%;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Dashboards */
+        .display-section {
+            grid-column: 1 / -1;
+            background: var(--kwau-dark-blue);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .total-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--kwau-yellow);
+            margin: 10px 0;
+        }
+
+        /* Bank Details Card */
+        .bank-card {
+            background: #fff9db;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px dashed var(--kwau-dark-blue);
+            margin-bottom: 20px;
+        }
+
+        .bank-details {
+            font-family: monospace;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            color: var(--kwau-dark-blue);
+        }
+
+        /* Form and Cards */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 15px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        /* Commitment Table */
+        .list-section {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th { background: var(--kwau-blue); color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+
+        @media (max-width: 600px) {
+            .total-amount { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo-link">
+            <img src="logo.jpeg" alt="KWAUK Logo" class="nav-logo">
+            <div style="color: var(--kwau-dark-blue); font-weight: bold;">KWAUK</div>
+        </a>
+        <a href="index.html" style="text-decoration: none; color: var(--text); font-weight: 600;">← Back to Home</a>
+    </nav>
+
+    <header class="page-header">
+        <h1>Ramadan Project 2026</h1>
+        <p>Providing Food Packs for the families of Kanaighat</p>
+    </header>
+
+    <div class="container">
+        <div class="display-section">
+            <h3>Total Pledged for Ramadan 2026</h3>
+            <div class="total-amount">£<span id="totalDisplay">0</span></div>
+            <p>Target: £15,000</p>
+        </div>
+
+        <div>
+            <div class="card" style="margin-bottom: 20px;">
+                <h2 style="color: var(--kwau-dark-blue); margin-top: 0;">Bank Transfer Details</h2>
+                <p>Please use your name as a reference when making a transfer.</p>
+                <div class="bank-card">
+                    <strong>Account Name:</strong><br>
+                    <div class="bank-details">Kanaighat Welfare Association (KWAUK)</div><br>
+                    <strong>Sort Code:</strong><br>
+                    <div class="bank-details">00-02-00</div><br>
+                    <strong>Account Number:</strong><br>
+                    <div class="bank-details">12548562</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 style="color: var(--kwau-dark-blue); margin-top: 0;">Make a Commitment</h2>
+            <form id="commitmentForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="donorName" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount (£)</label>
+                    <input type="number" id="donorAmount" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="tel" id="donorContact" required>
+                </div>
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea id="donorRemarks" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn-save">Save Commitment</button>
+            </form>
+        </div>
+
+        <div class="list-section">
+            <h3 style="color: var(--kwau-dark-blue); margin-top: 0;">Recent Commitments</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody id="commitmentTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let commitments = JSON.parse(localStorage.getItem('ramadan2026_data')) || [];
+
+        function updateUI() {
+            // Update Total
+            const total = commitments.reduce((sum, item) => sum + parseFloat(item.amount || 0), 0);
+            document.getElementById('totalDisplay').innerText = total.toLocaleString();
+
+            // Update Table
+            const tableBody = document.getElementById('commitmentTableBody');
+            tableBody.innerHTML = "";
+            
+            // Show latest commitments first
+            [...commitments].reverse().forEach(item => {
+                const row = `<tr>
+                    <td>${item.date}</td>
+                    <td>${item.name}</td>
+                    <td>£${item.amount}</td>
+                    <td>${item.remarks || '-'}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        document.getElementById('commitmentForm').onsubmit = function(e) {
+            e.preventDefault();
+
+            const newEntry = {
+                name: document.getElementById('donorName').value,
+                amount: document.getElementById('donorAmount').value,
+                contact: document.getElementById('donorContact').value,
+                remarks: document.getElementById('donorRemarks').value,
+                date: new Date().toLocaleDateString()
+            };
+
+            commitments.push(newEntry);
+            localStorage.setItem('ramadan2026_data', JSON.stringify(commitments));
+
+            alert("Thank you! Your commitment has been recorded.");
+            e.target.reset();
+            updateUI();
+        };
+
+        // Initial Load
+        updateUI();
+    </script>
+
+</body>
+</html>
