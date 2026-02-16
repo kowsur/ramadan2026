@@ -51,7 +51,6 @@
             gap: 30px;
         }
 
-        /* Dashboards */
         .display-section {
             grid-column: 1 / -1;
             background: var(--kwau-dark-blue);
@@ -68,7 +67,6 @@
             margin: 10px 0;
         }
 
-        /* Bank Details Card */
         .bank-card {
             background: #fff9db;
             padding: 25px;
@@ -86,7 +84,6 @@
             color: var(--kwau-dark-blue);
         }
 
-        /* Form and Cards */
         .card {
             background: white;
             padding: 30px;
@@ -116,7 +113,11 @@
             font-size: 1.1rem;
         }
 
-        /* Commitment Table */
+        .btn-save:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
         .list-section {
             grid-column: 1 / -1;
             background: white;
@@ -196,7 +197,7 @@
                     <label>Remarks</label>
                     <textarea id="donorRemarks" rows="2"></textarea>
                 </div>
-                <button type="submit" class="btn-save">Save Commitment</button>
+                <button type="submit" id="submitBtn" class="btn-save">Save Commitment</button>
             </form>
         </div>
 
@@ -212,55 +213,92 @@
                     </tr>
                 </thead>
                 <tbody id="commitmentTableBody">
-                    </tbody>
+                    <tr><td colspan="4" style="text-align:center;">Loading commitments...</td></tr>
+                </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        let commitments = JSON.parse(localStorage.getItem('ramadan2026_data')) || [];
+        const API_URL = "https://api.sheetbest.com/sheets/09979fcb-2870-45d9-ae3a-21534f740a3b";
 
-        function updateUI() {
-            // Update Total
-            const total = commitments.reduce((sum, item) => sum + parseFloat(item.amount || 0), 0);
-            document.getElementById('totalDisplay').innerText = total.toLocaleString();
+        // 1. Function to fetch data from Google Sheets
+        async function updateUI() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                // Calculate Total
+                const total = data.reduce((sum, item) => sum + parseFloat(item.amount || 0), 0);
+                document.getElementById('totalDisplay').innerText = total.toLocaleString();
 
-            // Update Table
-            const tableBody = document.getElementById('commitmentTableBody');
-            tableBody.innerHTML = "";
-            
-            // Show latest commitments first
-            [...commitments].reverse().forEach(item => {
-                const row = `<tr>
-                    <td>${item.date}</td>
-                    <td>${item.name}</td>
-                    <td>£${item.amount}</td>
-                    <td>${item.remarks || '-'}</td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
+                // Update Table
+                const tableBody = document.getElementById('commitmentTableBody');
+                tableBody.innerHTML = "";
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No commitments yet.</td></tr>";
+                    return;
+                }
+
+                // Show latest commitments first
+                [...data].reverse().forEach(item => {
+                    const row = `<tr>
+                        <td>${item.date}</td>
+                        <td>${item.name}</td>
+                        <td>£${item.amount}</td>
+                        <td>${item.remarks || '-'}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById('commitmentTableBody').innerHTML = "<tr><td colspan='4' style='text-align:center; color:red;'>Failed to load data.</td></tr>";
+            }
         }
 
-        document.getElementById('commitmentForm').onsubmit = function(e) {
+        // 2. Function to save data to Google Sheets
+        document.getElementById('commitmentForm').onsubmit = async function(e) {
             e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            
+            // Disable button and show loading state
+            btn.disabled = true;
+            btn.innerText = "Saving...";
 
             const newEntry = {
                 name: document.getElementById('donorName').value,
                 amount: document.getElementById('donorAmount').value,
                 contact: document.getElementById('donorContact').value,
                 remarks: document.getElementById('donorRemarks').value,
-                date: new Date().toLocaleDateString()
+                date: new Date().toLocaleDateString('en-GB') // DD/MM/YYYY format
             };
 
-            commitments.push(newEntry);
-            localStorage.setItem('ramadan2026_data', JSON.stringify(commitments));
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify([newEntry])
+                });
 
-            alert("Thank you! Your commitment has been recorded.");
-            e.target.reset();
-            updateUI();
+                if (response.ok) {
+                    alert("Thank you! Your commitment has been recorded.");
+                    e.target.reset();
+                    updateUI(); // Refresh the list
+                } else {
+                    throw new Error("Failed to save");
+                }
+            } catch (error) {
+                console.error("Error saving:", error);
+                alert("Sorry, there was an error saving your commitment. Please try again.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Save Commitment";
+            }
         };
 
-        // Initial Load
+        // Initial Load when page opens
         updateUI();
     </script>
 
